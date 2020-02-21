@@ -1,8 +1,8 @@
 type Query {
   people: [Person!]!
   projects: [Project!]!
-  weekPlanning(week_number: Int!): [PersonPlanning!]
-  personWeekPlanning(week_number: Int!, person_id: ID!): PersonPlanning
+  weekPlanning(weekNumber: Int!): [PersonPlanning!]
+  personWeekPlanning(weekNumber: Int!, personId: ID!): PersonPlanning
 }
 
 type Person {
