@@ -74,5 +74,7 @@ dmypy.json
 
 
 /gp
-/__pycache__
+*__pycache__
 .python-version
+.mypy_cache
+
