@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from ariadne import QueryType, make_executable_schema, load_schema_from_path
 from ariadne.asgi import GraphQL
 from resolvers.people.people import resolve_people
+from resolvers.projects.projects import resolve_projects
 
 app = FastAPI()
 
