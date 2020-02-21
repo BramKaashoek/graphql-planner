@@ -1,0 +1,33 @@
+type Query {
+  people: [Person!]!
+  projects: [Project!]!
+  planning(input: DayPlanningInput): [Planning!]!
+  weekPlanning(input: WeekPlanningInput): [[Planning!]!]!
+}
+
+type Person {
+  name: String!
+  projects: [Project!]!
+}
+
+type Project {
+  name: String!
+  people: [Person!]!
+}
+
+type Planning {
+  person: Person
+  project: Project
+  hours: Float
+  date: String
+}
+
+input DayPlanningInput {
+  date: String!
+  personId: Int
+}
+
+input WeekPlanningInput {
+  weekNumber: Int
+  personId: String
+}
