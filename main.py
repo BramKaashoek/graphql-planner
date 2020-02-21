@@ -1,29 +1,31 @@
 from fastapi import FastAPI
-from ariadne import QueryType, make_executable_schema, load_schema_from_path
 from ariadne.asgi import GraphQL
-from resolvers.people.people import resolve_people
-from resolvers.projects.projects import resolve_projects
+from schema import schema
+from db import db
+from db import models
+
+
+models.Base.metadata.create_all(bind=db.engine)
+
+def seed():
+    session = db.Session()
+    # import pdb; pdb.set_trace()
+    bram = models.Person(name="Bram")
+    session.add(bram)
+    dtc = models.Project(name="dtc")
+    session.add(dtc)
+    session.commit()
+
+# seed()
 
 app = FastAPI()
 
-type_defs = load_schema_from_path("schema.graphql")
-query = QueryType()
-
-
-@query.field("planning")
-def resolve_planning(*_):
-    return []
-
-@query.field("weekPlanning")
-def resolve_week_planning(*_):
-    return []
-
-
-# Bind resolvers
-query.set_field("people", resolve_people)
-query.set_field("projects", resolve_projects)
-
-# Create executable schema instance
-schema = make_executable_schema(type_defs, query)
+@app.middleware("http")
+async def db_session_middleware(request, call_next):
+    request.state.db = db.Session()
+    response = await call_next(request)
+    request.state.db.close()
+    return response
 
 app.mount("/graphql", GraphQL(schema, debug=True))
+
