@@ -1,33 +1,42 @@
 type Query {
   people: [Person!]!
   projects: [Project!]!
-  planning(input: DayPlanningInput): [Planning!]!
-  weekPlanning(input: WeekPlanningInput): [[Planning!]!]!
+  weekPlanning(weekNumber: Int!): [PersonPlanning!]
+  personWeekPlanning(weekNumber: Int!, personId: ID!): PersonPlanning
 }
 
 type Person {
+  id: ID!,
   name: String!
   projects: [Project!]!
 }
 
 type Project {
+  id: ID!,
   name: String!
   people: [Person!]!
 }
 
-type Planning {
-  person: Person
-  project: Project
-  hours: Float
-  date: String
+type PersonPlanning {
+  person: Person!,
+  week_number: Int,
+  week: [Day!]!
 }
 
-input DayPlanningInput {
-  date: String!
-  personId: Int
+enum Weekday {
+  Monday,
+  Tuesday,
+  Wednesday,
+  Thursday,
+  Friday
 }
 
-input WeekPlanningInput {
-  weekNumber: Int
-  personId: String
+type Day {
+  weekday: Weekday, 
+  items: [TimeAllocation!]!
+}
+
+type TimeAllocation {
+  project: Project!
+  hours: Float!
 }
