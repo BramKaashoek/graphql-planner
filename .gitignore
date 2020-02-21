@@ -1,3 +1,4 @@
 /gp
 *__pycache__
 .python-version
+.mypy_cache
