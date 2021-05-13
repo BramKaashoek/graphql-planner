@@ -1,10 +1,6 @@
 ariadne==0.10.0
 fastapi==0.49.0
 graphql-core==3.0.3
-mypy==0.761
-mypy-extensions==0.4.3
-pydantic==1.4
-SQLAlchemy==1.3.13
+pydantic==1.6.2
 starlette==0.12.9
-typed-ast==1.4.1
 typing-extensions==3.7.4.1
